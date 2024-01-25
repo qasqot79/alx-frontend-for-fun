@@ -1,96 +1,318 @@
-#!/usr/bin/python3
-
-"""
-Markdown script using python.
-"""
+#!/usr/bin/env python3
 import sys
-import os.path
+import os
+
+def convert_markdown_to_html(markdown_file, output_file):
+    # Check if the Markdown file exists
+    if not os.path.exists(markdown_file):
+        print(f"Missing {markdown_file}", file=sys.stderr)
+        sys.exit(1)
+
+    # Your actual conversion logic would go here
+    # For simplicity, let's just copy the content for demonstration purposes
+    with open(markdown_file, 'r') as md_file:
+        markdown_content = md_file.read()
+
+    # Write the content to the output file
+    with open(output_file, 'w') as html_file:
+        html_file.write(markdown_content)
+
+    sys.exit(0)
+
+if __name__ == "__main__":
+    # Check if the correct number of arguments is provided
+    if len(sys.argv) != 3:
+        print("Usage: ./markdown2html.py <Markdown_file> <Output_file>", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract arguments
+    markdown_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # Convert Markdown to HTML
+    convert_markdown_to_html(markdown_file, output_file)
+#!/usr/bin/env python3
+import sys
+import os
+import re
+
+def convert_markdown_to_html(markdown_file, output_file):
+    # Check if the Markdown file exists
+    if not os.path.exists(markdown_file):
+        print(f"Missing {markdown_file}", file=sys.stderr)
+        sys.exit(1)
+
+    # Read the content from the Markdown file
+    with open(markdown_file, 'r') as md_file:
+        markdown_content = md_file.read()
+
+    # Convert Markdown headings to HTML
+    html_content = re.sub(r'^(#{1,6})\s+(.+?)(?:\n|$)', lambda match: f"<{match.group(1).lower()}>{match.group(2)}</{match.group(1).lower()}>", markdown_content, flags=re.MULTILINE)
+
+    # Write the HTML content to the output file
+    with open(output_file, 'w') as html_file:
+        html_file.write(html_content)
+
+    sys.exit(0)
+
+if __name__ == "__main__":
+    # Check if the correct number of arguments is provided
+    if len(sys.argv) != 3:
+        print("Usage: ./markdown2html.py <Markdown_file> <Output_file>", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract arguments
+    markdown_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # Convert Markdown to HTML
+    convert_markdown_to_html(markdown_file, output_file)
+#!/usr/bin/env python3
+import sys
+import os
+import re
+
+def convert_markdown_to_html(markdown_file, output_file):
+    # Check if the Markdown file exists
+    if not os.path.exists(markdown_file):
+        print(f"Missing {markdown_file}", file=sys.stderr)
+        sys.exit(1)
+
+    # Read the content from the Markdown file
+    with open(markdown_file, 'r') as md_file:
+        markdown_content = md_file.read()
+
+    # Convert Markdown headings to HTML
+    html_content = re.sub(r'^(#{1,6})\s+(.+?)(?:\n|$)', lambda match: f"<{match.group(1).lower()}>{match.group(2)}</{match.group(1).lower()}>", markdown_content, flags=re.MULTILINE)
+
+    # Convert Markdown unordered lists to HTML
+    html_content = re.sub(r'^\s*-\s+(.+?)(?:\n|$)', r'<li>\1</li>', html_content, flags=re.MULTILINE)
+    html_content = re.sub(r'(<li>.*?</li>)\s*(?=\n*<\/ul>)', r'\1', html_content, flags=re.DOTALL)
+    html_content = re.sub(r'^\s*(- .+?)(?:\n|$)', r'<ul>\n\1\n</ul>', html_content, flags=re.MULTILINE)
+
+    # Write the HTML content to the output file
+    with open(output_file, 'w') as html_file:
+        html_file.write(html_content)
+
+    sys.exit(0)
+
+if __name__ == "__main__":
+    # Check if the correct number of arguments is provided
+    if len(sys.argv) != 3:
+        print("Usage: ./markdown2html.py <Markdown_file> <Output_file>", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract arguments
+    markdown_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # Convert Markdown to HTML
+    convert_markdown_to_html(markdown_file, output_file)
+#!/usr/bin/env python3
+import sys
+import os
+import re
+
+def convert_markdown_to_html(markdown_file, output_file):
+    # Check if the Markdown file exists
+    if not os.path.exists(markdown_file):
+        print(f"Missing {markdown_file}", file=sys.stderr)
+        sys.exit(1)
+
+    # Read the content from the Markdown file
+    with open(markdown_file, 'r') as md_file:
+        markdown_content = md_file.read()
+
+    # Convert Markdown headings to HTML
+    html_content = re.sub(r'^(#{1,6})\s+(.+?)(?:\n|$)', lambda match: f"<{match.group(1).lower()}>{match.group(2)}</{match.group(1).lower()}>", markdown_content, flags=re.MULTILINE)
+
+    # Convert Markdown unordered lists to HTML
+    html_content = re.sub(r'^\s*-\s+(.+?)(?:\n|$)', r'<li>\1</li>', html_content, flags=re.MULTILINE)
+    html_content = re.sub(r'(<li>.*?</li>)\s*(?=\n*<\/ul>)', r'\1', html_content, flags=re.DOTALL)
+    html_content = re.sub(r'^\s*(- .+?)(?:\n|$)', r'<ul>\n\1\n</ul>', html_content, flags=re.MULTILINE)
+
+    # Convert Markdown ordered lists to HTML
+    html_content = re.sub(r'^\s*\*\s+(.+?)(?:\n|$)', r'<li>\1</li>', html_content, flags=re.MULTILINE)
+    html_content = re.sub(r'(<li>.*?</li>)\s*(?=\n*<\/ol>)', r'\1', html_content, flags=re.DOTALL)
+    html_content = re.sub(r'^\s*(\* .+?)(?:\n|$)', r'<ol>\n\1\n</ol>', html_content, flags=re.MULTILINE)
+
+    # Write the HTML content to the output file
+    with open(output_file, 'w') as html_file:
+        html_file.write(html_content)
+
+    sys.exit(0)
+
+if __name__ == "__main__":
+    # Check if the correct number of arguments is provided
+    if len(sys.argv) != 3:
+        print("Usage: ./markdown2html.py <Markdown_file> <Output_file>", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract arguments
+    markdown_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # Convert Markdown to HTML
+    convert_markdown_to_html(markdown_file, output_file)
+#!/usr/bin/env python3
+import sys
+import os
+import re
+
+def convert_markdown_to_html(markdown_file, output_file):
+    # Check if the Markdown file exists
+    if not os.path.exists(markdown_file):
+        print(f"Missing {markdown_file}", file=sys.stderr)
+        sys.exit(1)
+
+    # Read the content from the Markdown file
+    with open(markdown_file, 'r') as md_file:
+        markdown_content = md_file.read()
+
+    # Convert Markdown headings to HTML
+    html_content = re.sub(r'^(#{1,6})\s+(.+?)(?:\n|$)', lambda match: f"<{match.group(1).lower()}>{match.group(2)}</{match.group(1).lower()}>", markdown_content, flags=re.MULTILINE)
+
+    # Convert Markdown unordered lists to HTML
+    html_content = re.sub(r'^\s*-\s+(.+?)(?:\n|$)', r'<li>\1</li>', html_content, flags=re.MULTILINE)
+    html_content = re.sub(r'(<li>.*?</li>)\s*(?=\n*<\/ul>)', r'\1', html_content, flags=re.DOTALL)
+    html_content = re.sub(r'^\s*(- .+?)(?:\n|$)', r'<ul>\n\1\n</ul>', html_content, flags=re.MULTILINE)
+
+    # Convert Markdown ordered lists to HTML
+    html_content = re.sub(r'^\s*\*\s+(.+?)(?:\n|$)', r'<li>\1</li>', html_content, flags=re.MULTILINE)
+    html_content = re.sub(r'(<li>.*?</li>)\s*(?=\n*<\/ol>)', r'\1', html_content, flags=re.DOTALL)
+    html_content = re.sub(r'^\s*(\* .+?)(?:\n|$)', r'<ol>\n\1\n</ol>', html_content, flags=re.MULTILINE)
+
+    # Convert Markdown paragraphs to HTML
+    html_content = re.sub(r'^\s*(.+?)(?:\n\n|$)', lambda match: f"<p>\n{match.group(1).replace('\n', '<br/>\n')}\n</p>", html_content, flags=re.MULTILINE | re.DOTALL)
+
+    # Write the HTML content to the output file
+    with open(output_file, 'w') as html_file:
+        html_file.write(html_content)
+
+    sys.exit(0)
+
+if __name__ == "__main__":
+    # Check if the correct number of arguments is provided
+    if len(sys.argv) != 3:
+        print("Usage: ./markdown2html.py <Markdown_file> <Output_file>", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract arguments
+    markdown_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # Convert Markdown to HTML
+    convert_markdown_to_html(markdown_file, output_file)
+#!/usr/bin/env python3
+import sys
+import os
+import re
+
+def convert_markdown_to_html(markdown_file, output_file):
+    # Check if the Markdown file exists
+    if not os.path.exists(markdown_file):
+        print(f"Missing {markdown_file}", file=sys.stderr)
+        sys.exit(1)
+
+    # Read the content from the Markdown file
+    with open(markdown_file, 'r') as md_file:
+        markdown_content = md_file.read()
+
+    # Convert Markdown headings to HTML
+    html_content = re.sub(r'^(#{1,6})\s+(.+?)(?:\n|$)', lambda match: f"<{match.group(1).lower()}>{match.group(2)}</{match.group(1).lower()}>", markdown_content, flags=re.MULTILINE)
+
+    # Convert Markdown unordered lists to HTML
+    html_content = re.sub(r'^\s*-\s+(.+?)(?:\n|$)', r'<li>\1</li>', html_content, flags=re.MULTILINE)
+    html_content = re.sub(r'(<li>.*?</li>)\s*(?=\n*<\/ul>)', r'\1', html_content, flags=re.DOTALL)
+    html_content = re.sub(r'^\s*(- .+?)(?:\n|$)', r'<ul>\n\1\n</ul>', html_content, flags=re.MULTILINE)
+
+    # Convert Markdown ordered lists to HTML
+    html_content = re.sub(r'^\s*\*\s+(.+?)(?:\n|$)', r'<li>\1</li>', html_content, flags=re.MULTILINE)
+    html_content = re.sub(r'(<li>.*?</li>)\s*(?=\n*<\/ol>)', r'\1', html_content, flags=re.DOTALL)
+    html_content = re.sub(r'^\s*(\* .+?)(?:\n|$)', r'<ol>\n\1\n</ol>', html_content, flags=re.MULTILINE)
+
+    # Convert Markdown paragraphs to HTML
+    html_content = re.sub(r'^\s*(.+?)(?:\n\n|$)', lambda match: f"<p>\n{match.group(1).replace('\n', '<br/>\n')}\n</p>", html_content, flags=re.MULTILINE | re.DOTALL)
+
+    # Convert Markdown bold and emphasis to HTML
+    html_content = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', html_content)
+    html_content = re.sub(r'__(.+?)__', r'<em>\1</em>', html_content)
+
+    # Write the HTML content to the output file
+    with open(output_file, 'w') as html_file:
+        html_file.write(html_content)
+
+    sys.exit(0)
+
+if __name__ == "__main__":
+    # Check if the correct number of arguments is provided
+    if len(sys.argv) != 3:
+        print("Usage: ./markdown2html.py <Markdown_file> <Output_file>", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract arguments
+    markdown_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # Convert Markdown to HTML
+    convert_markdown_to_html(markdown_file, output_file)
+#!/usr/bin/env python3
+import sys
+import os
 import re
 import hashlib
 
-if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print('Usage: ./markdown2html.py README.md README.html',
-              file=sys.stderr)
-        exit(1)
+def convert_markdown_to_html(markdown_file, output_file):
+    # Check if the Markdown file exists
+    if not os.path.exists(markdown_file):
+        print(f"Missing {markdown_file}", file=sys.stderr)
+        sys.exit(1)
 
-    if not os.path.isfile(sys.argv[1]):
-        print('Missing {}'.format(sys.argv[1]), file=sys.stderr)
-        exit(1)
+    # Read the content from the Markdown file
+    with open(markdown_file, 'r') as md_file:
+        markdown_content = md_file.read()
 
-    with open(sys.argv[1]) as read:
-        with open(sys.argv[2], 'w') as html:
-            unordered_start, ordered_start, paragraph = False, False, False
-            # bold syntax
-            for line in read:
-                line = line.replace('**', '<b>', 1)
-                line = line.replace('**', '</b>', 1)
-                line = line.replace('__', '<em>', 1)
-                line = line.replace('__', '</em>', 1)
+    # Convert Markdown headings to HTML
+    html_content = re.sub(r'^(#{1,6})\s+(.+?)(?:\n|$)', lambda match: f"<{match.group(1).lower()}>{match.group(2)}</{match.group(1).lower()}>", markdown_content, flags=re.MULTILINE)
 
-                # md5
-                md5 = re.findall(r'\[\[.+?\]\]', line)
-                md5_inside = re.findall(r'\[\[(.+?)\]\]', line)
-                if md5:
-                    line = line.replace(md5[0], hashlib.md5(
-                        md5_inside[0].encode()).hexdigest())
+    # Convert Markdown unordered lists to HTML
+    html_content = re.sub(r'^\s*-\s+(.+?)(?:\n|$)', r'<li>\1</li>', html_content, flags=re.MULTILINE)
+    html_content = re.sub(r'(<li>.*?</li>)\s*(?=\n*<\/ul>)', r'\1', html_content, flags=re.DOTALL)
+    html_content = re.sub(r'^\s*(- .+?)(?:\n|$)', r'<ul>\n\1\n</ul>', html_content, flags=re.MULTILINE)
 
-                # remove the letter C
-                remove_letter_c = re.findall(r'\(\(.+?\)\)', line)
-                remove_c_more = re.findall(r'\(\((.+?)\)\)', line)
-                if remove_letter_c:
-                    remove_c_more = ''.join(
-                        c for c in remove_c_more[0] if c not in 'Cc')
-                    line = line.replace(remove_letter_c[0], remove_c_more)
+    # Convert Markdown ordered lists to HTML
+    html_content = re.sub(r'^\s*\*\s+(.+?)(?:\n|$)', r'<li>\1</li>', html_content, flags=re.MULTILINE)
+    html_content = re.sub(r'(<li>.*?</li>)\s*(?=\n*<\/ol>)', r'\1', html_content, flags=re.DOTALL)
+    html_content = re.sub(r'^\s*(\* .+?)(?:\n|$)', r'<ol>\n\1\n</ol>', html_content, flags=re.MULTILINE)
 
-                length = len(line)
-                headings = line.lstrip('#')
-                heading_num = length - len(headings)
-                unordered = line.lstrip('-')
-                unordered_num = length - len(unordered)
-                ordered = line.lstrip('*')
-                ordered_num = length - len(ordered)
-                # headings, lists
-                if 1 <= heading_num <= 6:
-                    line = '<h{}>'.format(
-                        heading_num) + headings.strip() + '</h{}>\n'.format(
-                        heading_num)
+    # Convert Markdown paragraphs to HTML
+    html_content = re.sub(r'^\s*(.+?)(?:\n\n|$)', lambda match: f"<p>\n{match.group(1).replace('\n', '<br/>\n')}\n</p>", html_content, flags=re.MULTILINE | re.DOTALL)
 
-                if unordered_num:
-                    if not unordered_start:
-                        html.write('<ul>\n')
-                        unordered_start = True
-                    line = '<li>' + unordered.strip() + '</li>\n'
-                if unordered_start and not unordered_num:
-                    html.write('</ul>\n')
-                    unordered_start = False
+    # Convert Markdown bold and emphasis to HTML
+    html_content = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', html_content)
+    html_content = re.sub(r'__(.+?)__', r'<em>\1</em>', html_content)
 
-                if ordered_num:
-                    if not ordered_start:
-                        html.write('<ol>\n')
-                        ordered_start = True
-                    line = '<li>' + ordered.strip() + '</li>\n'
-                if ordered_start and not ordered_num:
-                    html.write('</ol>\n')
-                    ordered_start = False
+    # Convert MD5 syntax to HTML
+    html_content = re.sub(r'\[\[(.+?)\]\]', lambda match: hashlib.md5(match.group(1).encode('utf-8')).hexdigest(), html_content)
 
-                if not (heading_num or unordered_start or ordered_start):
-                    if not paragraph and length > 1:
-                        html.write('<p>\n')
-                        paragraph = True
-                    elif length > 1:
-                        html.write('<br/>\n')
-                    elif paragraph:
-                        html.write('</p>\n')
-                        paragraph = False
+    # Remove specified characters from content
+    html_content = re.sub(r'\(\((.+?)\)\)', lambda match: match.group(1).replace('c', ''), html_content, flags=re.IGNORECASE)
 
-                if length > 1:
-                    html.write(line)
+    # Write the HTML content to the output file
+    with open(output_file, 'w') as html_file:
+        html_file.write(html_content)
 
-            if unordered_start:
-                html.write('</ul>\n')
-            if ordered_start:
-                html.write('</ol>\n')
-            if paragraph:
-                html.write('</p>\n')
-    exit (0)
+    sys.exit(0)
+
+if __name__ == "__main__":
+    # Check if the correct number of arguments is provided
+    if len(sys.argv) != 3:
+        print("Usage: ./markdown2html.py <Markdown_file> <Output_file>", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract arguments
+    markdown_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # Convert Markdown to HTML
+    convert_markdown_to_html(markdown_file, output_file)
