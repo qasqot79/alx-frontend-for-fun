@@ -31,6 +31,7 @@ if __name__ == "__main__":
 
     # Convert Markdown to HTML
     convert_markdown_to_html(markdown_file, output_file)
+
 #!/usr/bin/env python3
 import sys
 import os
@@ -67,6 +68,7 @@ if __name__ == "__main__":
 
     # Convert Markdown to HTML
     convert_markdown_to_html(markdown_file, output_file)
+
 #!/usr/bin/env python3
 import sys
 import os
@@ -108,6 +110,7 @@ if __name__ == "__main__":
 
     # Convert Markdown to HTML
     convert_markdown_to_html(markdown_file, output_file)
+
 #!/usr/bin/env python3
 import sys
 import os
@@ -154,6 +157,7 @@ if __name__ == "__main__":
 
     # Convert Markdown to HTML
     convert_markdown_to_html(markdown_file, output_file)
+
 #!/usr/bin/env python3
 import sys
 import os
@@ -203,6 +207,7 @@ if __name__ == "__main__":
 
     # Convert Markdown to HTML
     convert_markdown_to_html(markdown_file, output_file)
+
 #!/usr/bin/env python3
 import sys
 import os
@@ -256,6 +261,7 @@ if __name__ == "__main__":
 
     # Convert Markdown to HTML
     convert_markdown_to_html(markdown_file, output_file)
+
 #!/usr/bin/env python3
 import sys
 import os
