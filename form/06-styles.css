@@ -969,4 +969,3 @@ textarea:invalid:not(:focus):not(:placeholder-shown) {
 input:required:valid:not(:placeholder-shown),
 textarea:valid:not(:placeholder-shown) {
   border: 0.1rem solid var(--valid-color);
-}
