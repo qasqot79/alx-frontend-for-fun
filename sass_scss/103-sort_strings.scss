@@ -1,5 +1,5 @@
-$list_to_sort: john anna zoe kim felicia carrie;
+/* Sorts the variable $list_to_sort and prints the sorted list in the debug output */
 
-$sorted_list: sort($list_to_sort);
+@import '103-sort_list';
 
-@debug $sorted_list;
+@debug $list_to_sort;
